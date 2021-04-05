@@ -3,6 +3,8 @@
 #include <time.h>
 
 using namespace std;
+
+// create a Player class that holds information
 class Player
 {
 private:
@@ -25,6 +27,7 @@ Player::Player() {
     atHome = true;
 }
 
+// decide whether or not the Player can start moving
 void Player::canRoamFree(int currentPosition, int diceRoll) {
     if(currentPosition == 0 && diceRoll == 6)
     {
@@ -75,6 +78,7 @@ bool Player::checkState() {
     return atHome;
 }
 
+// checks whether Player has encountered a chute
 void Player::isChute(int currentPosition) {
     if(currentPosition == 7 || currentPosition == 35 || currentPosition == 96)
     {
@@ -94,6 +98,7 @@ void Player::isChute(int currentPosition) {
     }
 }
 
+// checks whether Player has encountered a Ladder
 void Player::isLadder(int currentPosition) {
     if(currentPosition == 12 || currentPosition == 25 || currentPosition == 91)
     {
@@ -119,14 +124,17 @@ int main() {
     int continueOrNot;
     srand(time(NULL));
     int dice;
+    // initialize a Player
     Player playerOne;
 
+    // repeat until Player has reached square 100
     while(playerOne.getPosition() != 100)
     {
         cout<<endl<<"--------- Total dice rolls before this: "<<numberOfRolls<<"----------"<<endl;
         playerOne.printStats();
         cout<<"Press 1 to roll a die, press 2 to exit the game:";
         cin>>continueOrNot;
+        // Allow Player to exit the game anytime
         if(continueOrNot == 2)
         {
             cout<<"You have exited the game."<<endl;
@@ -146,6 +154,7 @@ int main() {
         }
 
         int place = playerOne.getPosition();
+        // check for Chutes and Ladders
         playerOne.isChute(place);
         playerOne.isLadder(place);
 
